@@ -192,6 +192,7 @@ export type {
   UserAuthCardProps,
   UserAuthFormProps,
   UserConsentCardProps,
+  UserConsentScope,
   UserLogoutCardProps,
   UserErrorCardProps,
   UserSettingsCardProps,

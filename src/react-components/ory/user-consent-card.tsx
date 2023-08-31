@@ -14,9 +14,16 @@ export type UserConsentCardProps = {
   cardImage?: string | React.ReactElement
   client_name: string
   requested_scope?: string[]
+  scopes?: UserConsentScope[]
   client?: OAuth2Client
   action: string
   className?: string
+}
+
+export type UserConsentScope = {
+  id: string
+  label: string
+  checked: boolean
 }
 
 export const UserConsentCard = ({
@@ -37,8 +44,8 @@ export const UserConsentCard = ({
           <Typography type="bold">{client_name}</Typography>
         </div>
       }
-      image={cardImage}
     >
+      <img src={cardImage}/>
       <form action={action} method="post">
         <input type="hidden" name="_csrf" value={csrfToken} />
         <input
@@ -52,6 +59,7 @@ export const UserConsentCard = ({
               The application requests access to the following permissions:
             </Typography>
           </div>
+
           <div className={gridStyle({ gap: 4 })}>
             {requested_scope.map((scope) => (
               <Checkbox
@@ -62,6 +70,19 @@ export const UserConsentCard = ({
               />
             ))}
           </div>
+
+          <div className={gridStyle({ gap: 4 })}>
+            {scopes.map((scope) => (
+              <Checkbox
+                key={scope.id}
+                label={scope.label}
+                value={scope.id}
+                checked={scope.checked}
+                name="grant_scope"
+              />
+            ))}
+          </div>
+
           <div className={gridStyle({ gap: 4 })}>
             <Typography size="xsmall">
               Only grant permissions if you trust this site or app. You do not
@@ -114,6 +135,9 @@ export const UserConsentCard = ({
             />
           </div>
         </div>
+        <Typography size="xsmall">
+          Version Carto
+        </Typography>
       </form>
     </Card>
   )

@@ -10,7 +10,7 @@ npm install
 
 # npm run refresh
 # npm run clean
-# npm run build:clean
+npm run build:clean
 # npm run build
 
 npm run initialize
