@@ -23,7 +23,12 @@ export type UserConsentCardProps = {
 export type UserConsentScope = {
   id: string
   label: string
+  defaultChecked: boolean
+  previousChecked: boolean
   checked: boolean
+  disabled?: boolean
+  description?: string
+  hidden?: boolean // should this scope ever show to a user (inferred yes)
 }
 
 export const UserConsentCard = ({
@@ -32,6 +37,7 @@ export const UserConsentCard = ({
   cardImage,
   client_name = "Unnamed Client",
   requested_scope = [],
+  scopes = [],
   client,
   action,
   className,
@@ -40,12 +46,12 @@ export const UserConsentCard = ({
     <Card
       className={className}
       heading={
-        <div style={{ textAlign: "center" }}>
-          <Typography type="bold">{client_name}</Typography>
-        </div>
+        <div/>
       }
     >
-      <img src={cardImage}/>
+      <div style={{ textAlign: "center" }}>
+        <img src={cardImage} style={{ maxHeight: "120px" }} alt={client_name} />
+      </div>
       <form action={action} method="post">
         <input type="hidden" name="_csrf" value={csrfToken} />
         <input
@@ -55,32 +61,68 @@ export const UserConsentCard = ({
         />
         <div className={gridStyle({ gap: 16 })}>
           <div className={gridStyle({ gap: 4 })} style={{ marginBottom: 16 }}>
-            <Typography>
-              The application requests access to the following permissions:
+            <center>
+            <Typography size="small" variant="body2">
+                <strong>{client_name}</strong> requests access to the following permissions:
             </Typography>
+            </center>
           </div>
 
           <div className={gridStyle({ gap: 4 })}>
-            {requested_scope.map((scope) => (
-              <Checkbox
-                key={scope}
-                label={scope}
-                value={scope}
-                name="grant_scope"
-              />
-            ))}
-          </div>
+            {scopes.map((scope) => {
+              return (
+                <div>
+                  {scope.disabled && (
+                    <div style={{ color: '#ccc' }}>
+                      <input type="hidden" name="grant_scope" value={scope.id} />
+                      <Checkbox
+                        key={scope.id}
+                        label={scope.label}
+                        value={scope.id}
+                        checked={scope.checked}
+                        readOnly
+                        name="grant_scope"
+                      />
+                      <Typography size="tiny" variant="body2" hidden={scope.description == null}>
+                        {scope.description}
+                      </Typography>
+                    </div>
+                  )}
 
-          <div className={gridStyle({ gap: 4 })}>
-            {scopes.map((scope) => (
-              <Checkbox
-                key={scope.id}
-                label={scope.label}
-                value={scope.id}
-                checked={scope.checked}
-                name="grant_scope"
-              />
-            ))}
+                  {scope.previousChecked == true && (
+                    <div style={{ color: '#5d5d5d' }}>
+                      <Checkbox
+                        key={scope.id}
+                        label={scope.label}
+                        value={scope.id}
+                        checked={scope.checked}
+                        defaultChecked={scope.defaultChecked}
+                        name="grant_scope"
+                      />
+                      <Typography size="tiny" variant="body2" hidden={scope.description == null}>
+                        {scope.description}
+                      </Typography>
+                    </div>
+                  )}
+
+                  {scope.previousChecked == false && (
+                    <div>
+                      <Checkbox
+                        key={scope.id}
+                        label={scope.label}
+                        value={scope.id}
+                        checked={scope.checked}
+                        defaultChecked={scope.defaultChecked}
+                        name="grant_scope"
+                      />
+                      <Typography size="tiny" variant="body2" hidden={scope.description == null}>
+                        {scope.description}
+                      </Typography>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           <div className={gridStyle({ gap: 4 })}>
@@ -100,18 +142,6 @@ export const UserConsentCard = ({
                 <Typography size="xsmall">Terms of Service</Typography>
               </a>
             )}
-          </div>
-          <Divider />
-          <div className={gridStyle({ gap: 8 })}>
-            <Checkbox
-              label="remember my decision"
-              id="remember"
-              name="remember"
-            />
-            <Typography size="xsmall">
-              Remember this decision for next time. The application will not be
-              able to ask for additional permissions without your consent.
-            </Typography>
           </div>
           <div
             className={gridStyle({ direction: "row" })}
@@ -135,9 +165,6 @@ export const UserConsentCard = ({
             />
           </div>
         </div>
-        <Typography size="xsmall">
-          Version Carto
-        </Typography>
       </form>
     </Card>
   )
