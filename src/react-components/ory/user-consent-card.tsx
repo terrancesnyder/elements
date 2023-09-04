@@ -95,7 +95,6 @@ export const UserConsentCard = ({
                         key={scope.id}
                         label={scope.label}
                         value={scope.id}
-                        checked={scope.checked}
                         defaultChecked={scope.defaultChecked}
                         name="grant_scope"
                       />
@@ -111,7 +110,6 @@ export const UserConsentCard = ({
                         key={scope.id}
                         label={scope.label}
                         value={scope.id}
-                        checked={scope.checked}
                         defaultChecked={scope.defaultChecked}
                         name="grant_scope"
                       />
