@@ -6,7 +6,7 @@ npm config set fetch-retry-maxtimeout 120000
 
 rm -rf ./packages/markup/dist/
 
-# sudo npm install -g lerna@5.6.2
+npm install -g lerna@5.6.2
 
 # npm install
 
