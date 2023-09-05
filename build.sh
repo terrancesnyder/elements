@@ -8,7 +8,7 @@ rm -rf ./packages/markup/dist/
 
 # npm install -g lerna@5.6.2
 
-# npm install
+npm install
 
 # npm run refresh
 # npm run clean
