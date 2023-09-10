@@ -24,11 +24,7 @@ export type UserConsentScope = {
   id: string
   label: string
   defaultChecked: boolean
-  previousChecked: boolean
-  checked: boolean
-  disabled?: boolean
   description?: string
-  hidden?: boolean // should this scope ever show to a user (inferred yes)
 }
 
 export const UserConsentCard = ({
@@ -72,52 +68,16 @@ export const UserConsentCard = ({
             {scopes.map((scope) => {
               return (
                 <div>
-                  {scope.disabled && (
-                    <div style={{ color: '#ccc' }}>
-                      <input type="hidden" name="grant_scope" value={scope.id} />
-                      <Checkbox
-                        key={scope.id}
-                        label={scope.label}
-                        value={scope.id}
-                        checked={scope.checked}
-                        readOnly
-                        name="grant_scope"
-                      />
-                      <Typography size="tiny" variant="body2" hidden={scope.description == null}>
-                        {scope.description}
-                      </Typography>
-                    </div>
-                  )}
-
-                  {scope.previousChecked == true && (
-                    <div style={{ color: '#5d5d5d' }}>
-                      <Checkbox
-                        key={scope.id}
-                        label={scope.label}
-                        value={scope.id}
-                        defaultChecked={scope.defaultChecked}
-                        name="grant_scope"
-                      />
-                      <Typography size="tiny" variant="body2" hidden={scope.description == null}>
-                        {scope.description}
-                      </Typography>
-                    </div>
-                  )}
-
-                  {scope.previousChecked == false && (
-                    <div>
-                      <Checkbox
-                        key={scope.id}
-                        label={scope.label}
-                        value={scope.id}
-                        defaultChecked={scope.defaultChecked}
-                        name="grant_scope"
-                      />
-                      <Typography size="tiny" variant="body2" hidden={scope.description == null}>
-                        {scope.description}
-                      </Typography>
-                    </div>
-                  )}
+                  <Checkbox
+                    key={scope.id}
+                    label={scope.label}
+                    value={scope.id}
+                    defaultChecked={scope.defaultChecked}
+                    name="grant_scope"
+                  />
+                  <Typography size="tiny" variant="body2" hidden={scope.description == null}>
+                    {scope.description}
+                  </Typography>
                 </div>
               );
             })}
