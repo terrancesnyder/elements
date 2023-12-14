@@ -286,7 +286,6 @@ export const UserAuthCard = ({
         {$oidc && (
           <>
             <Divider />
-            <div>This is something...</div>
             <UserAuthForm flow={flow} data-testid={`${flowType}-flow-oidc`}>
               {$oidc}
             </UserAuthForm>

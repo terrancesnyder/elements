@@ -106,7 +106,7 @@ export const UserAuthForm = ({
       />
       {children}
     </>
-    <input type="hidden" name="upstream_parameters.prompt" value="select_account" />
-    <input type="hidden" name="upstream_parameters.auth_type" value="reauthenticate" />
+    {/* <input type="hidden" name="upstream_parameters.prompt" value="select_account" />
+    <input type="hidden" name="upstream_parameters.auth_type" value="reauthenticate" /> */}
   </form>
 )
