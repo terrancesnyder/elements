@@ -1,3 +1,4 @@
+// look at me...
 import {
   UpdateLoginFlowBody,
   UpdateRecoveryFlowBody,
@@ -71,6 +72,8 @@ export const UserAuthForm = ({
           | UpdateRecoveryFlowBody
           | UpdateVerificationFlowBody
           | UpdateSettingsFlowBody
+        
+        console.log(body, 'body')
 
         // We need the method specified from the name and value of the submit button.
         // when multiple submit buttons are present, the clicked one's value is used.
@@ -103,5 +106,7 @@ export const UserAuthForm = ({
       />
       {children}
     </>
+    <input type="hidden" name="upstream_parameters.prompt" value="select_account" />
+    <input type="hidden" name="upstream_parameters.auth_type" value="reauthenticate" />
   </form>
 )
